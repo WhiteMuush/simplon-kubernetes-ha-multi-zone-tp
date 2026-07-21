@@ -1,4 +1,4 @@
-# simplon-kubernetes-microservices-tp
+# <img src="https://cdn.simpleicons.org/kubernetes" height="28" alt="Kubernetes" align="center"/> Kubernetes &amp; Golang microservices <img src="https://cdn.simpleicons.org/go" height="28" alt="Go" align="center"/>
 
 Deploying a Go microservices application on Kubernetes (kind), in high availability, with the API Gateway exposed through a LoadBalancer service.
 
@@ -134,3 +134,7 @@ kind delete cluster --name microservices
 ## Brief
 
 See [docs/CONSIGNES.md](docs/CONSIGNES.md).
+
+## Result
+
+![result.png](img.png)
