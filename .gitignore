@@ -9,6 +9,11 @@
 bin/
 vendor/
 
+# Locally built binaries (produced by go build ./cmd/*)
+/api
+/books
+/movies
+
 # Go workspace
 go.work
 go.work.sum
