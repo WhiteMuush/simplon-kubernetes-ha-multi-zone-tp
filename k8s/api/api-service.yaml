@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: books
+  name: api
 spec:
+  type: LoadBalancer
   selector:
-    app: books
+    app: api
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-  
+    - port: 8080
+      targetPort: 8080     

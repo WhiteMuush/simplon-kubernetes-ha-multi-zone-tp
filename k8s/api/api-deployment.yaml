@@ -1,26 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $title$
-  labels:
-    app: $title$
+  name: api
 spec:
-  replicas: $1$
+  replicas: 2
   selector:
     matchLabels:
-      app: $title$
+      app: api
   template:
     metadata:
-      name: $title$
       labels:
-        app: $title$
+        app: api
     spec:
       containers:
-        - name: $title$
-          image: $nginx$
-          imagePullPolicy: IfNotPresent
+        - name: api
+          image: microservices:1.0
+          command: ["./api"]
+          env:
+            - name: BOOKS_API_HOST
+              value: "books"
+            - name: MOVIES_API_HOST
+              value: "movies"
           ports:
-            - containerPort: $80$
-              protocol: $TCP$
-      restartPolicy: Always
-      $END$
+            - containerPort: 8080
