@@ -16,5 +16,12 @@ spec:
         - name: movies
           image: microservices:1.0
           command: ["./movies"]
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 30
           ports:
             - containerPort: 8080
