@@ -12,6 +12,13 @@ spec:
       labels:
         app: movies
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: movies
+              topologyKey: zone
       containers:
         - name: movies
           image: microservices:1.0
