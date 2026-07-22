@@ -22,13 +22,13 @@ spec:
                   app: movies
               topologyKey: zone
       topologySpreadConstraints:
-         - maxSkew: 1
-           topologyKey: kubernetes.io/hostname   # ← on cible le nœud physique/logique
-           whenUnsatisfiable: ScheduleAnyway     # ← OPTIONNEL : si impossible, on schedule quand même
-           labelSelector:                        # ← on cible TOUTES les apps
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
             matchExpressions:
               - key: app
-                operator: Exists                # ← tous les pods qui ont une label "app"
+                operator: Exists
       containers:
         - name: api
           image: microservices:1.0
