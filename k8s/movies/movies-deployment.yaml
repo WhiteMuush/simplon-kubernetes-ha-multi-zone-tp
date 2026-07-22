@@ -19,6 +19,14 @@ spec:
                 matchLabels:
                   app: movies
               topologyKey: zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: Exists
       containers:
         - name: movies
           image: microservices:1.0
