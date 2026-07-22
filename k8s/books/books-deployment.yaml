@@ -19,7 +19,7 @@ spec:
               podAffinityTerm:
                labelSelector:
                 matchLabels:
-                  app: movies
+                  app: books
               topologyKey: zone
       topologySpreadConstraints:
         - maxSkew: 1
