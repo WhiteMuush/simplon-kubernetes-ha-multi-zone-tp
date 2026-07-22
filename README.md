@@ -1,5 +1,9 @@
 # <img src="https://cdn.simpleicons.org/kubernetes" height="28" alt="Kubernetes" align="center"/> HA multi-zone Go microservices on Kubernetes <img src="https://cdn.simpleicons.org/go" height="28" alt="Go" align="center"/>
 
+![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Kind-326CE5?logo=kubernetes&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-distroless-2496ED?logo=docker&logoColor=white)
+
 Three Go microservices (API Gateway, Books, Movies) deployed in strict High Availability on a Kind cluster of 9 workers spread over 3 simulated zones.
 
 > Brief of the previous iteration (single-zone HA): [docs/CONSIGNES.md](docs/CONSIGNES.md)
@@ -27,14 +31,26 @@ Bonus: Traffic Distribution Policy, PodDisruptionBudget. Neither is implemented 
 ## Architecture
 
 ```
-   HOST (http://localhost:8080/data)
-        |
-        v   LoadBalancer (cloud-provider-kind)
-   ┌─────────┐   internal    ┌──────────┐
-   │   api   │ ───────────►  │  books   │  (ClusterIP)
-   │ Gateway │ ───────────►  │  movies  │  (ClusterIP)
-   └─────────┘               └──────────┘
+                         HOST  (http://localhost:8080/data)
+                              │
+                              ▼  LoadBalancer (cloud-provider-kind)
+                              │
+                   FRANCE (Kind cluster "francecentral")
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+ zone francecentral-1   zone francecentral-2   zone francecentral-3
+        │                     │                     │
+  control-plane-1        control-plane-2        control-plane-3    (tainted, no app pods)
+        │                     │                     │
+   ┌────┼────┐            ┌────┼────┐            ┌────┼────┐
+ worker worker worker   worker worker worker   worker worker worker
+   │      │      │         │      │      │         │      │      │
+  pod    pod    pod       pod    pod    pod       pod    pod    pod
+ (api) (books)(movies)   (api) (books)(movies)   (api) (books)(movies)
 ```
+
+`podAntiAffinity` (required, `topologyKey: zone`) forces exactly one pod per app per zone; `topologySpreadConstraints` (soft, `topologyKey: kubernetes.io/hostname`) then spreads those 9 pods one per worker instead of stacking them. `api` is the only one reachable from outside (LoadBalancer); `books` and `movies` stay ClusterIP, called by `api` over Service DNS.
 
 One Docker image, three binaries, the container `command` picks the app. The API reaches the others by Service DNS name, injected as `BOOKS_API_HOST=books` and `MOVIES_API_HOST=movies` (port 80, so no suffix).
 
@@ -58,7 +74,7 @@ Probes are TCP on 8080: startup (`failureThreshold 30`, `period 5s`) covers boot
 
 ## Requirements
 
-Docker, kind, kubectl, siege, and cloud-provider-kind for LoadBalancer support:
+Docker, [kind](https://kind.sigs.k8s.io/), kubectl, [siege](https://github.com/JoeDog/siege), and cloud-provider-kind for LoadBalancer support:
 
 ```bash
 go install sigs.k8s.io/cloud-provider-kind@latest
