@@ -2,6 +2,8 @@
 
 Three Go microservices (API Gateway, Books, Movies) deployed in strict High Availability on a Kind cluster of 9 workers spread over 3 simulated zones.
 
+> Brief of the previous iteration (single-zone HA): [docs/CONSIGNES.md](docs/CONSIGNES.md)
+
 ## Collaborators
 
 | | Name | GitLab |
