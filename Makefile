@@ -1,21 +1,26 @@
-CLUSTER1:=francecentral-1
-CLUSTER2:=francecentral-2
-CLUSTER3:=francecentral-3
+CLUSTER:=kind-config
 
-.PHONY: create-clusters
-create-clusters :
-	@kind create cluster --config $(CLUSTER1).yaml
-	@echo "------------------------------------------------"
-	@kind create cluster --config $(CLUSTER2).yaml
-	@echo "------------------------------------------------"
-	@kind create cluster --config $(CLUSTER3).yaml
-	@echo "------------------------------------------------"
+.PHONY: create-cluster
+create-cluster :
+	@kind create cluster --config $(CLUSTER).yaml
+	@echo "---------------------------------------------"
 
-.PHONY: delete-clusters
-delete-clusters :
-	@kind delete cluster --name $(CLUSTER1)
-	@echo "------------------------------------------------"
-	@kind delete cluster --name $(CLUSTER2)
-	@echo "------------------------------------------------"
-	@kind delete cluster --name $(CLUSTER3)
-	@echo "------------------------------------------------"
+.PHONY: delete-cluster
+delete-cluster :
+	@kind delete cluster --name $(CLUSTER)
+	@echo "---------------------------------------------"
+
+.PHONY: status-cluster
+status-cluster :
+	@echo "--------------------NODES--------------------"
+	@kubectl get nodes
+	@echo "---------------------------------------------"
+	@echo "--------------------PODS---------------------"
+	@kubectl get pods
+	@echo "---------------------------------------------"
+	@echo "-------------------SERVICE-------------------"
+	@kubectl get services
+	@echo "---------------------------------------------"
+	@echo "------------------DEPLOYMENTS----------------"
+	@kubectl get deployments
+	@echo "---------------------------------------------"
