@@ -19,31 +19,39 @@ spec:
                 matchLabels:
                   app: api
               topologyKey: zone
+      topologySpreadConstraints:
+         - maxSkew: 1
+           topologyKey: kubernetes.io/hostname   # ← on cible le nœud physique/logique
+           whenUnsatisfiable: ScheduleAnyway     # ← OPTIONNEL : si impossible, on schedule quand même
+           labelSelector:                        # ← on cible TOUTES les apps
+            matchExpressions:
+              - key: app
+                operator: Exists                # ← tous les pods qui ont une label "app"
       containers:
         - name: api
           image: microservices:1.0
           command: ["./api"]
-          startupProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            failureThreshold: 30
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            failureThreshold: 3
+          # startupProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: 8080
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          #   failureThreshold: 30
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: 8080
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          #   failureThreshold: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: 8080
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          #   failureThreshold: 3
           env:
             - name: BOOKS_API_HOST
               value: "books"
