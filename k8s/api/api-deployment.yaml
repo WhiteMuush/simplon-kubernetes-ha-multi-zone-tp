@@ -12,6 +12,8 @@ spec:
       labels:
         app: api
     spec:
+      nodeSelector:
+        workload: api
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -19,6 +21,14 @@ spec:
                 matchLabels:
                   app: api
               topologyKey: zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: Exists
       containers:
         - name: api
           image: microservices:1.0

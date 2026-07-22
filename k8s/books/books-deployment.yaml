@@ -12,6 +12,8 @@ spec:
       labels:
         app: books
     spec:
+      nodeSelector:
+        workload: books
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -19,6 +21,14 @@ spec:
                 matchLabels:
                   app: books
               topologyKey: zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: Exists
       containers:
         - name: books
           image: microservices:1.0
