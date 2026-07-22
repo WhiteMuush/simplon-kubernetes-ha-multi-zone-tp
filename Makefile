@@ -12,11 +12,11 @@ delete-cluster :
 
 .PHONY: status-cluster
 status-cluster :
-	@echo "--------------------NODES--------------------"
-	@kubectl get nodes
+	@echo "--------------------NODES ET ZONES--------------------"
+	@kubectl get nodes -o custom-columns='NODE:.metadata.name,ZONE:.metadata.labels.zone,STATUS:.status.conditions[-1:].type,INTERNAL-IP:.status.addresses[?(@.type=="InternalIP")].address,EXTERNAL-IP:.status.addresses[?(@.type=="ExternalIP")].address'
 	@echo "---------------------------------------------"
-	@echo "--------------------PODS---------------------"
-	@kubectl get pods
+	@echo "--------------------PODS STATUS------------"
+	@kubectl get pods -o wide
 	@echo "---------------------------------------------"
 	@echo "-------------------SERVICE-------------------"
 	@kubectl get services
