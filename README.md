@@ -116,7 +116,3 @@ Losing one node per zone costs each app one replica per affected zone, but the t
 Losing a whole zone removes one third of the capacity for good: the strict anti-affinity forbids rebuilding the replica elsewhere. That is deliberate. A `preferred` rule would restore 3 running replicas at once, but by putting 2 in the same zone, so the next zone failure would take down two thirds instead of one third. `required` trades replica count for guaranteed spreading, which is the right call when the failure domain is what we defend against.
 
 Kubernetes closes the loop without us: probes detect the sick pods, endpoints stop routing to them, evicted workloads are rescheduled under the placement constraints, and the cluster converges back to the desired state as soon as capacity returns. The orchestrator does not prevent failures, it turns "the machine is down" into "the desired state is temporarily unmet".
-
-## Result
-
-![result.png](img.png)
