@@ -1,0 +1,16 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: francecentral-3
+nodes:
+  - role: control-plane
+    label:
+      zone: francecentral-3
+  - role: worker
+    label:
+      zone: francecentral-3
+  - role: worker
+    label:
+      zone: francecentral-3
+  - role: worker
+    label:
+      zone: francecentral-3
