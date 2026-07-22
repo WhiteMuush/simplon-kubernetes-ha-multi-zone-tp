@@ -3,14 +3,14 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: francecentral-3
 nodes:
   - role: control-plane
-    label:
+    labels:
       zone: francecentral-3
   - role: worker
-    label:
+    labels:
       zone: francecentral-3
   - role: worker
-    label:
+    labels:
       zone: francecentral-3
   - role: worker
-    label:
+    labels:
       zone: francecentral-3
