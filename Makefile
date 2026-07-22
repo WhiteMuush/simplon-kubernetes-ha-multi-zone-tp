@@ -41,3 +41,15 @@ deployments:
 	@echo "---------------movies deployment-------------"
 	@kubectl apply -f ./k8s/movies/movies-deployment.yaml
 	@echo "---------------------------------------------"
+
+.PHONY: services
+services:
+	@echo "-----------------api service-----------------"
+	@kubectl apply -f ./k8s/api/api-service.yaml
+	@echo "---------------------------------------------"
+	@echo "----------------books service----------------"
+	@kubectl apply -f ./k8s/books/books-service.yaml
+	@echo "---------------------------------------------"
+	@echo "----------------movies service---------------"
+	@kubectl apply -f ./k8s/movies/movies-service.yaml
+	@echo "---------------------------------------------"
