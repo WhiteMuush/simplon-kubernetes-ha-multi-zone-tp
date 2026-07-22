@@ -12,8 +12,6 @@ spec:
       labels:
         app: movies
     spec:
-      nodeSelector:
-        workload: movies
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

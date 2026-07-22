@@ -12,8 +12,6 @@ spec:
       labels:
         app: api
     spec:
-      nodeSelector:
-        workload: api
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

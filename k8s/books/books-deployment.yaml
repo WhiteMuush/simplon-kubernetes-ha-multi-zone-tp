@@ -12,8 +12,6 @@ spec:
       labels:
         app: books
     spec:
-      nodeSelector:
-        workload: books
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
