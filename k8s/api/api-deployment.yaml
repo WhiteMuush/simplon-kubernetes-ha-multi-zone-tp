@@ -12,6 +12,13 @@ spec:
       labels:
         app: api
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: api
+              topologyKey: zone
       containers:
         - name: api
           image: microservices:1.0
