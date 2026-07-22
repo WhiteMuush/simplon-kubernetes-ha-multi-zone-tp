@@ -4,10 +4,10 @@ Three Go microservices (API Gateway, Books, Movies) deployed in strict High Avai
 
 ## Collaborators
 
-| Name | Contact |
-|---|---|
-| Melvin PETIT | melvin.petit31@gmail.com |
-| Leith Zniber | leith311.z@hotmail.fr |
+| | Name | GitLab |
+|---|---|---|
+| <img src="https://gitlab.com/uploads/-/system/user/avatar/25079794/avatar.png?width=48" width="48" height="48" alt="Melvin PETIT avatar"/> | Melvin PETIT | [@WhiteMuush](https://gitlab.com/WhiteMuush) |
+| <img src="https://secure.gravatar.com/avatar/517f74b6241ee925a3bfa3bfcf2febedc774773db90295c061b2cba360a173ad?s=48&d=identicon" width="48" height="48" alt="Leith Zniber avatar"/> | Leith Zniber | [@Bambstk](https://gitlab.com/Bambstk) |
 
 ## Project context
 
