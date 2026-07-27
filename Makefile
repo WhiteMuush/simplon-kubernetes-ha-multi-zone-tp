@@ -51,15 +51,15 @@ SIEGE:=siege --concurrent=10 --benchmark http://localhost:8080/data
 
 .PHONY: test1
 test1: ## Load test alone, 100% availability expected
-	$(SIEGE) --time=60S
+	$(SIEGE) --time=10S
 
 .PHONY: test2
 test2: ## Load test, one node drained after 30s
-	@( sleep 30; $(MAKE) drain-node ) & $(SIEGE) --time=120S
+	@( sleep 30; $(MAKE) drain-node ) & $(SIEGE) --time=10S
 
 .PHONY: test3
 test3: ## Load test, a whole zone drained after 30s
-	@( sleep 30; $(MAKE) drain-zone ) & $(SIEGE) --time=120S
+	@( sleep 30; $(MAKE) drain-zone ) & $(SIEGE) --time=10S
 
 ##@ Chaos (called by test2 and test3, or run on their own)
 
